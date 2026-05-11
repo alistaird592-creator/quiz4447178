@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Awareness</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #E91E63;
+            margin-bottom: 30px;
+        }
+        .question {
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .question:last-child {
+            border-bottom: none;
+        }
+        .question-number {
+            font-weight: bold;
+            color: #E91E63;
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin: 12px 0;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        button {
+            display: block;
+            margin: 40px auto 0;
+            padding: 15px 40px;
+            font-size: 20px;
+            background: #E91E63;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #d81b60;
+        }
+        #result {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    
+        <!-- User Greeting -->
+        <div class="greeting" id="userGreeting"></div>
+
+    <div class="container">
+        <h1>Social Awareness Quiz</h1>
+        <p style="text-align: center; color: #666;">Test your understanding of social issues</p>
+
+        <form id="quizForm">
+            
+            <!-- Question 1 -->
+            <div class="question">
+                <div class="question-number">1. What does "equality" mean?</div>
+                <label><input type="radio" name="q1" value="same"> Everyone should be exactly the same</label>
+                <label><input type="radio" name="q1" value="fair"> Everyone should be treated fairly and have equal rights</label>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question">
+                <div class="question-number">2. Which action helps the environment?</div>
+                <label><input type="radio" name="q2" value="litter"> Littering in the park</label>
+                <label><input type="radio" name="q2" value="recycle"> Recycling plastic bottles</label>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question">
+                <div class="question-number">3. What should you do if you see someone being bullied?</div>
+                <label><input type="radio" name="q3" value="join"> Join in or laugh</label>
+                <label><input type="radio" name="q3" value="help"> Tell a teacher or help the person</label>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question">
+                <div class="question-number">4. Why is diversity important in society?</div>
+                <label><input type="radio" name="q4" value="bad"> It causes problems</label>
+                <label><input type="radio" name="q4" value="good"> It brings different ideas, cultures, and strengths</label>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question">
+                <div class="question-number">5. What is the best way to show respect to others?</label>
+                <label><input type="radio" name="q5" value="listen"> Listen to their opinions and treat them kindly</label>
+                <label><input type="radio" name="q5" value="ignore"> Ignore people who are different from you</label>
+            </div>
+
+            <button type="button" onclick="submitQuiz()">Submit Answers</button>
+        </form>
+
+
+
+        <div id="result"></div>
+
+
+            <!-- GO BACK BUTTON -->
+            
+    </div>
+
+
+    <br><br>
+            <button onclick="goBackToResult()" class="back-button">
+                ← Go Back to Welcome Page
+            </button>
+
+    <script>
+        function submitQuiz() {
+            const form = document.getElementById('quizForm');
+            let score = 0;
+
+            // Correct answers
+            if (form.q1.value === "fair") score++;
+            if (form.q2.value === "recycle") score++;
+            if (form.q3.value === "help") score++;
+            if (form.q4.value === "good") score++;
+            if (form.q5.value === "listen") score++;
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = "block";
+
+            if (score === 5) {
+                resultDiv.innerHTML = `🎉 Outstanding! You got ${score}/5 correct!`;
+                resultDiv.style.color = "#4CAF50";
+            } else if (score >= 3) {
+                resultDiv.innerHTML = `Well done! You got ${score}/5 correct.`;
+                resultDiv.style.color = "#E91E63";
+            } else {
+                resultDiv.innerHTML = `You got ${score}/5 correct.<br>Keep building your social awareness!`;
+                resultDiv.style.color = "#f44336";
+            }
+        }
+
+        function goBackToResult() {
+            window.location.href = 'result.html';
+        }
+
+        function showUserName() {
+            const username = localStorage.getItem('username');
+            const greetingDiv = document.getElementById('userGreeting');
+            
+            if (username) {
+                greetingDiv.innerHTML = `👋 Welcome, <span style="color:#4CAF50">${username}</span>!`;
+            } else {
+                greetingDiv.innerHTML = `👋 Welcome, Guest!`;
+            }
+        }
+
+        // Call when page loads
+        window.onload = showUserName;
+    </script>
+
+</body>
+</html>

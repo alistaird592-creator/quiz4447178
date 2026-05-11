@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Your Name</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+        input {
+            padding: 12px;
+            font-size: 18px;
+            width: 320px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #date{font-size: 12px;}
+    </style>
+</head>
+<body>
+    <h4>Date / time</h4>
+    <div class="clock" id = "date"></div>
+    <div class="time" id = "time"></div>
+    <h1>Enter details below</h1>
+
+    <input type="text" id="nameInput" placeholder="Your name" />
+    
+    <button onclick="saveName()">Submit</button>
+    <br>
+    <input type="text" id="emailInput" placeholder="Your email" />
+    <button>Submit</button>
+    
+
+    <script>
+        // Load saved name if exists
+        const savedName = localStorage.getItem('username');
+        if (savedName) {
+            document.getElementById('nameInput').value = savedName;
+        }
+
+        function saveName() {
+            const name = document.getElementById('nameInput').value.trim();
+            
+            if (!name) {
+                alert('Please enter your name!');
+                return;
+            }
+
+            localStorage.setItem('username', name);
+            window.location.href = 'result.html';
+        }
+
+        // Allow pressing Enter
+        document.getElementById('nameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') saveName();
+        });
+
+        function updateClock() {
+            const now = new Date();
+
+            // Format Time (HH:MM:SS)
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+
+            // Add leading zero
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            
+            // Format Date
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const dateString = now.toLocaleDateString(undefined, options);
+
+            // Update HTML
+            document.getElementById('time').textContent = timeString;
+            document.getElementById('date').textContent = dateString;
+        }
+
+        // Update every second
+        setInterval(updateClock, 1000);
+
+        // Initial call
+        updateClock();
+    </script>
+</body>
+</html>
+    </script>
+</body>
+</html>
